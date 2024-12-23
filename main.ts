@@ -1,27 +1,30 @@
-import { render } from 'https://esm.sh/preact';
+import { render } from "https://esm.sh/preact"
 
-import { html } from './html.ts'
+import { html } from "./html.ts"
 
-import { para } from './para.ts'
+import { Navbar } from "./components/navbar.ts";
 
-type nprops = {
-  name: string
+import { Gallery } from "./pages/gallery.ts"
+
+type SwipeEvent = {
+  detail: SwipeData
 }
 
-function App(props: nprops) {
-  const picsum = html`<div><img src="https://picsum.photos/200/300" /></div>`
+type SwipeData = {
+  dir: "up" | "down" | "left" | "right"
+}
+
+function App() {
+  const onSwiped = (event: SwipeEvent) => {
+    console.log(event.detail.dir)
+  }
+
   return html`
-    <header>
-      <h1>
-        Hello ${props.name}!
-      </h1>
-    </header>
-    <main>
-      <${para} message=hi >
-        ${Array(3).fill(0).map(() => picsum)}
-      </para>
+    <${Navbar} />
+    <main onswiped=${onSwiped} >
+      <${Gallery} />
     </main>
   `;
 }
 
-render(html`<${App} name="World" />`, document.body);
+render(html`<${App} />`, document.body);

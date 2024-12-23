@@ -1,1 +1,3 @@
 dist
+.env.ts
+resp.json

@@ -561,11 +561,15 @@
   },
   "redirects": {
     "https://esm.sh/htm": "https://esm.sh/htm@3.1.1",
-    "https://esm.sh/preact": "https://esm.sh/preact@10.25.3"
+    "https://esm.sh/preact": "https://esm.sh/preact@10.25.3",
+    "https://esm.sh/preact/hooks": "https://esm.sh/preact@10.25.3/hooks"
   },
   "remote": {
     "https://esm.sh/htm@3.1.1": "618fdb44f13eae1da6c01bfee68f97bf0b37d784d12eabacc85e5d306ebd1310",
-    "https://esm.sh/preact@10.25.3": "5a6dd0f7a583bc1081166279d6bf678238b84eab862b34f1da460d65b27c7bb0"
+    "https://esm.sh/preact@10.25.3": "5a6dd0f7a583bc1081166279d6bf678238b84eab862b34f1da460d65b27c7bb0",
+    "https://esm.sh/preact@10.25.3/hooks": "7e58da5c47801c9eb609ead58b84e6faa42e06d2d9707c4057d63d0f91529d8b",
+    "https://esm.sh/stable/preact@10.25.3/denonext/hooks.js": "52ab6b5a1254c3e067a455e4b4a5ae4c80ece425bf4eeecc2321638113b75ae8",
+    "https://esm.sh/stable/preact@10.25.3/denonext/preact.mjs": "4cf0d3bc882df93cf2c45d9166b5317661779848fa33dee43f6ef4d3182a0be1"
   },
   "workspace": {
     "dependencies": [

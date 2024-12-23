@@ -7,7 +7,8 @@ export class Client {
       "Authorization": `Client-ID ${clientId}`
     }
     this.fopts = {
-      headers: headers
+      headers: headers,
+      referrerPolicy: "no-referrer",
     }
   }
 
@@ -22,7 +23,7 @@ export class Client {
 
     return apiResp.data
   }
-  
+
   private rationalizeGallery(items: GalleryItem[]) {
     for (const i in items) {
       const item = items[i]
@@ -40,7 +41,7 @@ export class Client {
   }
 
   async Gallery() {
-    const items =  await this.fetch<GalleryItem[]>("/gallery/hot/viral/day/0")
+    const items =  await this.fetch<GalleryItem[]>("gallery/hot/viral/day/0")
     if (items === null) {
       console.error("no items in response")
       return []
