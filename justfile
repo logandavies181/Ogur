@@ -4,8 +4,8 @@ alias c := check
 
 alias b := build
 @build: check
+    deno run -A npm:tailwindcss -o dist/output.cs
     bun build main.ts --outdir dist
-    deno run -A npm:tailwindcss -o dist/output.css
 
 alias s := serve
 @serve: build
