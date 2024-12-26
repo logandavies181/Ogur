@@ -19,7 +19,6 @@ export function Carousel({ children }: CarouselProps) {
   const [showIndex, setShowIndex] = useState(0)
 
   const onSwiped = (event: SwipeEvent) => {
-    console.log(`swiped ${event.detail.dir}`)
     switch (event.detail.dir) {
     case "left":
       setShowIndex(showIndex+1)
@@ -31,16 +30,19 @@ export function Carousel({ children }: CarouselProps) {
   }
 
   return html`
-    <div class="min-w-full w-full flex flex-row overflow-hidden rounded-lg"
+    <div class="min-w-full w-full min-h-full h-full flex flex-col grow"
       onswiped=${onSwiped}
     >
-      ${children.map((child, index) => {
-        return html`
-          <div class="min-w-full w-full" style=${index == showIndex ? {} : {display: "none"}} >
-            ${child}
-          </div>
-        `
-      })}
+      <div class="min-w-full w-full min-h-full h-full flex flex-row overflow-hidden rounded-lg"
+      >
+        ${children.map((child, index) => {
+          return html`
+            <div class="min-w-full w-full" style=${index == showIndex ? {} : {display: "none"}} >
+              ${child}
+            </div>
+          `
+        })}
+      </div>
     </div>
   `
 }

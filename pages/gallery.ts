@@ -16,7 +16,6 @@ export function Gallery() {
       const client = new Client(IMGUR_TOKEN)
       const gallery = await client.Gallery()
       setGallery(gallery)
-      console.log(gallery[0])
     })()
   }, [])
 

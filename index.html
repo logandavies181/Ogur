@@ -5,6 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="dist/output.css">
     <title>Test App!</title>
+    <style>
+      /* grow the content all the way to the bottom of the page
+       * for better swiping
+       */
+      html, body {
+        height: 100%;
+
+        display: flex;
+        flex-direction: column;
+      }
+      body > * {
+        flex-shrink: 0;
+      }
+    </style>
   </head>
   <script src="dist/main.js" type="module"></script>
   <script src="dist/swiped-events.min.js"></script>

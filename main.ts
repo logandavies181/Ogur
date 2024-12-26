@@ -9,7 +9,7 @@ import { Gallery } from "./pages/gallery.ts"
 function App() {
   return html`
     <${Navbar} />
-    <main >
+    <main class="flex flex-col grow" >
       <${Gallery} />
     </main>
   `;
