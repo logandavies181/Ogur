@@ -4,4 +4,4 @@ if (imgurToken == undefined) {
   Deno.exit(1)
 }
 
-Deno.writeTextFile(".env.ts",`export const IMGUR_TOKEN = "${imgurToken}"\n`)
+Deno.writeTextFile(".env.ts", `export const IMGUR_TOKEN = "${imgurToken}"\n`)

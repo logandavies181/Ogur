@@ -4,7 +4,7 @@ export class Client {
   private fopts: RequestInit
   constructor(clientId: string) {
     const headers = {
-      "Authorization": `Client-ID ${clientId}`
+      Authorization: `Client-ID ${clientId}`,
     }
     this.fopts = {
       headers: headers,
@@ -14,11 +14,11 @@ export class Client {
 
   private async fetch<T>(subPath: string) {
     const raw = await fetch(`${baseUrl}/${subPath}`, this.fopts)
-    const apiResp = await raw.json() as ApiResponse<T>
+    const apiResp = (await raw.json()) as ApiResponse<T>
 
     if (apiResp.status !== 200) {
       console.error(apiResp)
-      return null;
+      return null
     }
 
     return apiResp.data
@@ -39,7 +39,7 @@ export class Client {
   }
 
   async Gallery() {
-    const items =  await this.fetch<GalleryItem[]>("gallery/hot/viral/day/0")
+    const items = await this.fetch<GalleryItem[]>("gallery/hot/viral/day/0")
     if (items === null) {
       console.error("no items in response")
       return []
@@ -52,8 +52,8 @@ export class Client {
 }
 
 export type ApiResponse<T> = {
-  data: T,
-  success: boolean,
+  data: T
+  success: boolean
   status: number
 }
 

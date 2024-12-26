@@ -20,24 +20,27 @@ export function Carousel({ children }: CarouselProps) {
 
   const onSwiped = (event: SwipeEvent) => {
     switch (event.detail.dir) {
-    case "left":
-      setShowIndex(showIndex+1)
-      break
-    case "right":
-      setShowIndex(showIndex-1)
-      break
+      case "left":
+        setShowIndex(showIndex + 1)
+        break
+      case "right":
+        setShowIndex(showIndex - 1)
+        break
     }
   }
 
   return html`
-    <div class="min-w-full w-full min-h-full h-full flex flex-col grow"
+    <div
+      class="min-w-full w-full min-h-full h-full flex flex-col grow"
       onswiped=${onSwiped}
     >
-      <div class="min-w-full w-full min-h-full h-full flex flex-row overflow-hidden rounded-lg"
-      >
+      <div class="min-w-full w-full min-h-full h-full flex flex-row overflow-hidden rounded-lg">
         ${children.map((child, index) => {
           return html`
-            <div class="min-w-full w-full" style=${index == showIndex ? {} : {display: "none"}} >
+            <div
+              class="min-w-full w-full"
+              style=${index == showIndex ? {} : { display: "none" }}
+            >
               ${child}
             </div>
           `

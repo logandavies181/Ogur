@@ -11,7 +11,7 @@ import "./vendor/swiped-events/swiped-events.min.js"
 function App() {
   return html`
     <${Navbar} />
-    <main class="flex flex-col grow" >
+    <main class="flex flex-col grow">
       <${Gallery} />
     </main>
   `
