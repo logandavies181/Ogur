@@ -31,8 +31,6 @@ export class Client {
         continue
       }
 
-      console.log(`rationalising: ${item.id}`)
-
       // unsafe cast to ImageItem to deal with awkward dynamic response model
       const imageItem = item as unknown as ImageItem
 

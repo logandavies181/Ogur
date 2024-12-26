@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120" width="100" height="100">
+  <!-- Polaroid Frame -->
+  <rect x="10" y="10" width="80" height="80" fill="white" stroke="#000" stroke-width="2" rx="10" />
+
+  <!-- Image Area (Top Part of Polaroid) -->
+  <rect x="20" y="20" width="60" height="50" fill="#87CEEB" rx="5" />
+
+  <!-- Abstract Landscape inside the photo (a simple mountain) -->
+  <polygon points="25,50 50,30 75,50" fill="#2F4F4F" />
+  <polygon points="50,50 75,40 100,50" fill="#708090" />
+</svg>

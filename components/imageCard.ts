@@ -15,19 +15,35 @@ export function ImageCard({ input }: ImageCardProps) {
   if (input.type == ImageTypes.Jpeg || input.type == ImageTypes.Png) {
     return html`
       <div class="flex flex-col" >
-        <h3>Title is: [ ${input.title} ]</h3>
+        ${
+          input.title &&
+          html`<h3>${input.title}</h3>`
+        }
         <img src=${input.link} />
-        Description is: [ ${input.description} ]
+        ${
+          input.description && 
+          html`${input.description}`
+        }
       </div>
     `
   }
 
   if (input.type == ImageTypes.Mp4) {
     return html`
-      <video class="w-full" autoplay muted controls>
-        <source src=${input.link} type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
+      <div class="flex flex-col" >
+        ${
+          input.title &&
+          html`<h3>${input.title}</h3>`
+        }
+        <video class="w-full" autoplay muted controls>
+          <source src=${input.link} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        ${
+          input.description && 
+          html`${input.description}`
+        }
+      </div>
     `
   }
 
