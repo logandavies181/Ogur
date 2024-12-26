@@ -11,3 +11,11 @@ alias b := build
 alias s := serve
 @serve: build
     python3 -m http.server 8080
+
+alias f := fmt
+@fmt:
+    deno run -A npm:prettier -w **/*.ts
+
+alias i := init
+@init:
+    deno run -A bin/init-env.ts
