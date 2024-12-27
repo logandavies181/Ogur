@@ -52,7 +52,7 @@ export function Gallery() {
             fetching = true
           }
 
-          (async () => {
+          ;(async () => {
             console.log("am fetching!")
             const nextPage = await client.Gallery(pageNumber)
             setGalleryItems(galleryItems.concat(nextPage))
