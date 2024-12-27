@@ -3,6 +3,7 @@ import { ImageItem } from "../imgur/client.ts"
 
 type ImageCardProps = {
   input: ImageItem
+  pageTitle: string
 }
 
 const ImageTypes = {
@@ -12,21 +13,17 @@ const ImageTypes = {
   Png: "image/png",
 } as const
 
-export function ImageCard({ input }: ImageCardProps) {
-  if (input.type == ImageTypes.Jpeg || input.type == ImageTypes.Png || input.type == ImageTypes.Gif) {
-    return html`
-      <div class="flex flex-col">
-        ${input.title && html`<h3>${input.title}</h3>`}
-        <img src=${input.link} />
-        ${input.description && html`${input.description}`}
-      </div>
-    `
-  }
+export function ImageCard({ input, pageTitle }: ImageCardProps) {
+  let imageOrVideo = html``
 
-  if (input.type == ImageTypes.Mp4) {
-    return html`
-      <div class="flex flex-col">
-        ${input.title && html`<h3>${input.title}</h3>`}
+  switch (input.type) {
+    case ImageTypes.Jpeg:
+    case ImageTypes.Gif:
+    case ImageTypes.Png:
+      imageOrVideo = html`<img src=${input.link} />`
+      break
+    case ImageTypes.Mp4:
+      imageOrVideo = html`
         <video
           class="w-full"
           autoplay
@@ -39,10 +36,17 @@ export function ImageCard({ input }: ImageCardProps) {
           />
           Your browser does not support the video tag.
         </video>
-        ${input.description && html`${input.description}`}
-      </div>
-    `
+      `
+      break
+    default:
+      return html`<h3>Type: ${input.type} not implemented</h3>`
   }
 
-  return html`<h3>Type: ${input.type} not implemented</h3>`
+  return html`
+    <div class="flex flex-col">
+      ${input.title && input.title != pageTitle && html`<h3 class="ml-2" >${input.title}</h3>`}
+      ${imageOrVideo}
+      ${input.description && html`<div class="ml-2">${input.description}</div>`}
+    </div>
+  `
 }
