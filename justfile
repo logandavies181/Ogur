@@ -4,9 +4,9 @@ alias c := check
 
 alias b := build
 @build: check
+    bun build main.ts --outdir dist
     deno run -A npm:tailwindcss -o dist/output.css
     cp public/favicon.svg dist
-    bun build main.ts --outdir dist
 
 alias s := serve
 @serve: build
