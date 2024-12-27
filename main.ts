@@ -9,7 +9,7 @@ import { Gallery } from "./pages/gallery.ts"
 import "./vendor/swiped-events/swiped-events.min.js"
 
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("dist/sw.js", { scope: "/" })
+  navigator.serviceWorker.register("sw.js", { scope: "/" })
 }
 
 function App() {

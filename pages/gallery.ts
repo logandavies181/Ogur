@@ -15,9 +15,20 @@ type SwipeData = {
   dir: "up" | "down" | "left" | "right"
 }
 
+type KeyDownEvent = {
+  code: string
+}
+
+const KeyDownKeys = {
+  left: "ArrowLeft",
+  right: "ArrowRight",
+} as const
+
 export function Gallery() {
   const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([])
   const [showIndex, setShowIndex] = useState(0)
+  const [fetching, setFetching] = useState(false)
+  const [pageNumber, setPageNumber] = useState(0)
 
   const client = new Client(IMGUR_TOKEN)
 
@@ -32,44 +43,56 @@ export function Gallery() {
     })()
   }, [])
 
-  const onSwiped = () => {
-    let pageNumber = 0
-    let fetching = false
-    return (event: SwipeEvent) => {
-      switch (event.detail.dir) {
-        case "left":
-          setShowIndex(showIndex + 1)
+  const handleDecr = () => {
+    if (showIndex == 0) {
+      return
+    }
 
-          if (showIndex < galleryItems.length * 0.8) {
-            break
-          }
+    setShowIndex(showIndex - 1)
+  }
 
-          pageNumber += 1
+  const handleIncr = () => {
+    setShowIndex(showIndex + 1)
 
-          if (fetching) {
-            break
-          } else {
-            fetching = true
-          }
+    if (showIndex < galleryItems.length * 0.8) {
+      return
+    }
 
-          ;(async () => {
-            console.log("am fetching!")
-            const nextPage = await client.Gallery(pageNumber)
-            setGalleryItems(galleryItems.concat(nextPage))
-            fetching = false
-          })()
+    setPageNumber(pageNumber + 1)
 
-          break
+    if (fetching) {
+      return
+    } else {
+      setFetching(true)
+    }
 
-        case "right":
-          if (showIndex == 0) {
-            break
-          }
+    ;(async () => {
+      const nextPage = await client.Gallery(pageNumber)
+      setGalleryItems(galleryItems.concat(nextPage))
+      setFetching(false)
+    })()
+  }
 
-          setShowIndex(showIndex - 1)
-          break
-      }
-      console.log(`page: ${showIndex} out of ${galleryItems.length}`)
+  const onSwiped = (event: SwipeEvent) => {
+    switch (event.detail.dir) {
+      case "left":
+        handleIncr()
+        break
+
+      case "right":
+        handleDecr()
+        break
+    }
+  }
+
+  const onKeyDown = (event: KeyDownEvent) => {
+    switch (event.code) {
+      case KeyDownKeys.right:
+        handleIncr()
+        break
+      case KeyDownKeys.left:
+        handleDecr()
+        break
     }
   }
 
@@ -80,7 +103,9 @@ export function Gallery() {
   return html`
     <div
       class="min-w-full w-full min-h-full h-full flex flex-col grow"
-      onswiped=${onSwiped()}
+      onswiped=${onSwiped}
+      onKeyDown=${onKeyDown}
+      tabIndex="0"
     >
       <div class="min-w-full w-full min-h-full h-full flex flex-row overflow-hidden rounded-lg">
         ${galleryItems.map((item, index) => {
