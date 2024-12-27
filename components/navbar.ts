@@ -2,7 +2,7 @@ import { html } from "../html.ts"
 
 export function Navbar() {
   return html`
-    <nav class="bg-white border-gray-200 dark:bg-gray-900">
+    <nav>
       <div class="flex flex-row">
         <img
           class="ml-2"
@@ -11,7 +11,7 @@ export function Navbar() {
           height="50"
         />
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-          <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Test App!</span>
+          <span class="self-center text-2xl text-gray-300 font-semibold whitespace-nowrap">Ogur</span>
         </div>
         <div class="spaceholder grow"></div>
       </div>
