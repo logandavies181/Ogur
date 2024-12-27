@@ -4,10 +4,6 @@ import { IMGUR_TOKEN } from "../.env.ts"
 
 const client = new Client(IMGUR_TOKEN)
 
-const gal = await client.Gallery()
+const gal = await client.Gallery(2)
 
-for (const item of gal) {
-  for (const image of item.images) {
-    console.log(image.type)
-  }
-}
+console.log(gal.length)

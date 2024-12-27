@@ -7,12 +7,13 @@ type ImageCardProps = {
 
 const ImageTypes = {
   Jpeg: "image/jpeg",
-  Png: "image/png",
+  Gif: "image/gif",
   Mp4: "video/mp4",
+  Png: "image/png",
 } as const
 
 export function ImageCard({ input }: ImageCardProps) {
-  if (input.type == ImageTypes.Jpeg || input.type == ImageTypes.Png) {
+  if (input.type == ImageTypes.Jpeg || input.type == ImageTypes.Png || input.type == ImageTypes.Gif) {
     return html`
       <div class="flex flex-col">
         ${input.title && html`<h3>${input.title}</h3>`}

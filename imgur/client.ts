@@ -38,8 +38,8 @@ export class Client {
     }
   }
 
-  async Gallery() {
-    const items = await this.fetch<GalleryItem[]>("gallery/hot/viral/day/0")
+  async Gallery(pageNumber: number) {
+    const items = await this.fetch<GalleryItem[]>(`gallery/hot/viral/day/${pageNumber}`)
     if (items === null) {
       console.error("no items in response")
       return []
