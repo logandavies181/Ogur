@@ -1,0 +1,16 @@
+{
+  "name": "Ogur",
+  "short_name": "Ogur",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#172439",
+  "theme_color": "#172439",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "dist/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    }
+  ]
+}
