@@ -43,7 +43,7 @@ export function ImageCard({ input, pageTitle }: ImageCardProps) {
   }
 
   return html`
-    <div class="flex flex-col">
+    <div class="flex flex-col m-1">
       ${input.title && input.title != pageTitle && html`<h3 class="ml-2">${input.title}</h3>`} ${imageOrVideo}
       ${input.description && html`<div class="ml-2">${input.description}</div>`}
     </div>
