@@ -7,15 +7,20 @@ import { Navbar } from "./components/navbar.ts"
 import { Gallery } from "./pages/gallery.ts"
 
 import "./vendor/swiped-events/swiped-events.min.js"
+import { KeyDownEvent, KeyDownTopic } from "./lib/events.ts";
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("sw.js", { scope: "/" })
 }
 
+addEventListener("keydown", (e: KeyDownEvent) => {
+  KeyDownTopic.Publish(e)
+})
+
 function App() {
   return html`
     <${Navbar} />
-    <main class="flex flex-col grow">
+    <main class="flex flex-col grow" >
       <${Gallery} />
     </main>
   `

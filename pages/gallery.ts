@@ -7,22 +7,7 @@ import { Client } from "../imgur/client.ts"
 import { GalleryPage } from "../components/galleryPage.ts"
 import { IMGUR_TOKEN } from "../.env.ts"
 
-type SwipeEvent = {
-  detail: SwipeData
-}
-
-type SwipeData = {
-  dir: "up" | "down" | "left" | "right"
-}
-
-type KeyDownEvent = {
-  code: string
-}
-
-const KeyDownKeys = {
-  left: "ArrowLeft",
-  right: "ArrowRight",
-} as const
+import { KeyDownEvent, KeyDownKeys, KeyDownTopic, SwipeEvent } from "../lib/events.ts"
 
 export function Gallery() {
   const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([])
@@ -96,6 +81,8 @@ export function Gallery() {
     }
   }
 
+  KeyDownTopic.Subscribe(onKeyDown)
+
   if (galleryItems.length == 0) {
     return html`Loading...`
   }
@@ -104,8 +91,6 @@ export function Gallery() {
     <div
       class="min-w-full w-full min-h-full h-full flex flex-col grow"
       onswiped=${onSwiped}
-      onKeyDown=${onKeyDown}
-      tabIndex="0"
     >
       <div class="min-w-full w-full min-h-full h-full flex flex-row overflow-hidden rounded-lg">
         ${galleryItems.map((item, index) => {
