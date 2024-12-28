@@ -1,8 +1,6 @@
-import { GalleryItem } from "../imgur/client.ts"
-
-import { ImageCard } from "./imageCard.ts"
-
 import { html } from "../html.ts"
+import { GalleryItem } from "../imgur/client.ts"
+import { ImageCard } from "./imageCard.ts"
 
 type GalleryPageProps = {
   galleryItem: GalleryItem

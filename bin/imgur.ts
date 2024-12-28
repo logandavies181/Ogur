@@ -1,6 +1,5 @@
-import { Client } from "../imgur/client.ts"
-
 import { IMGUR_TOKEN } from "../.env.ts"
+import { Client } from "../imgur/client.ts"
 
 const client = new Client(IMGUR_TOKEN)
 

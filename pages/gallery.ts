@@ -1,12 +1,10 @@
 import { useEffect, useState } from "https://esm.sh/preact/hooks"
 
-import { GalleryItem } from "../imgur/client.ts"
-
 import { html } from "../html.ts"
+import { GalleryItem } from "../imgur/client.ts"
 import { Client } from "../imgur/client.ts"
 import { GalleryPage } from "../components/galleryPage.ts"
 import { IMGUR_TOKEN } from "../.env.ts"
-
 import { KeyDownEvent, KeyDownKeys, KeyDownTopic, SwipeEvent } from "../lib/events.ts"
 
 export function Gallery() {
