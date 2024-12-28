@@ -79,7 +79,7 @@ export function Gallery() {
     }
   }
 
-  KeyDownTopic.Subscribe(onKeyDown)
+  KeyDownTopic.Subscribe("galleryPage", onKeyDown)
 
   if (galleryItems.length == 0) {
     return html`Loading...`
