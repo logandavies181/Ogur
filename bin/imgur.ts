@@ -3,6 +3,4 @@ import { Client } from "../imgur/client.ts"
 
 const client = new Client(IMGUR_TOKEN)
 
-const gal = await client.Gallery(2)
-
-console.log(gal.length)
+const gal = await client.GalleryFirst()
