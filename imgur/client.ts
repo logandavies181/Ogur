@@ -58,25 +58,21 @@ export class Client {
 
   // Imgur API for gallery gives incomplete albums - they only have 3 images in them!
   private async ensureUpcomingAlbumsFilled() {
-    for (let i = 0; i < 5; i++) {
-      const item = this.items[this.currIndex + i]
-      if (item == undefined) {
-        return
-      }
+    const idx = this.currIndex
+    const item = this.items[this.currIndex]
 
-      if (item.images.length == item.images_count) {
-        return
-      }
-
-      console.log(`index: ${i}. id: ${item.id}`)
-
-      const album = await this.fetch<AlbumItem>(`album/${item.id}`)
-      if (album == null) {
-        console.error("null album response")
-        continue
-      }
-      item.images = album.images
+    if (item.images.length == item.images_count) {
+      return
     }
+
+    console.log(`fetching rest of album images for ${item.id}`)
+
+    const album = await this.fetch<AlbumItem>(`album/${item.id}`)
+    if (album == null) {
+      console.error("null album response")
+      return
+    }
+    this.items[idx].images = album.images
   }
 
   async GalleryFirst() {
@@ -85,15 +81,15 @@ export class Client {
     }
     this.currIndex = 0
     await this.ensureUpcomingAlbumsFilled()
-    console.log(this.items)
     return this.items[this.currIndex]
   }
 
   async GalleryNext() {
     this.currIndex++
+    console.log(this.items[this.currIndex].images[0].id)
     await this.ensureUpcomingAlbumsFilled()
     console.log(`curr index is: ${this.currIndex}`)
-    console.log(this.items[this.currIndex])
+    console.log(this.items[this.currIndex].images[0].id)
     return this.items[this.currIndex]
   }
 

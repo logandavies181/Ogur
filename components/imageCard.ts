@@ -25,15 +25,12 @@ export function ImageCard({ input, pageTitle }: ImageCardProps) {
     case ImageTypes.Mp4:
       imageOrVideo = html`
         <video
-          class="w-full"
+          class="w-full ${input.id}"
           autoplay
           muted
           controls
+          src=${input.link}
         >
-          <source
-            src=${input.link}
-            type="video/mp4"
-          />
           Your browser does not support the video tag.
         </video>
       `
@@ -43,7 +40,7 @@ export function ImageCard({ input, pageTitle }: ImageCardProps) {
   }
 
   return html`
-    <div class="flex flex-col m-1">
+    <div class="flex flex-col m-1 ${input.id}">
       ${input.title && input.title != pageTitle && html`<h3 class="ml-2">${input.title}</h3>`} ${imageOrVideo}
       ${input.description && html`<div class="ml-2">${input.description}</div>`}
     </div>
