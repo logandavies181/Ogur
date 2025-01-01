@@ -92,12 +92,9 @@ export function Gallery() {
     >
       <div class="min-w-full w-full min-h-full h-full flex flex-row overflow-hidden rounded-lg">
         ${galleryItems.map((item, index) => {
-          if (Math.abs(index - showIndex) < 5) {
+          if (index == showIndex) {
             return html`
-              <div
-                class="min-w-full w-full"
-                style=${index == showIndex ? {} : { display: "none" }}
-              >
+              <div class="min-w-full w-full">
                 <${GalleryPage} galleryItem=${item} />
               </div>
             `

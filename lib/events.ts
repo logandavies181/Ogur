@@ -18,7 +18,7 @@ export type SwipeData = {
 export type Callback<T> = (t: T) => void
 
 class Topic<T> {
-  private callbacks = new Map<string, Callback<T>>
+  private callbacks = new Map<string, Callback<T>>()
 
   public Subscribe(name: string, cb: Callback<T>) {
     this.callbacks.set(name, cb)
