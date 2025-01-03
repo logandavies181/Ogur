@@ -1,10 +1,17 @@
 const baseUrl = "https://api.imgur.com/3"
 
+const precacheRange = 3
+
+// TODO: probably make this dynamic each time the app is built
+const imageCache = "imgs"
+
 export class Client {
   private fopts: RequestInit
   private initialized: boolean
   private items: GalleryItem[]
   private currIndex: number
+  private currPage: number
+  private currPageMuxLocked: boolean
   constructor(clientId: string) {
     const headers = {
       Authorization: `Client-ID ${clientId}`,
@@ -15,6 +22,8 @@ export class Client {
     }
     this.initialized = false
     this.currIndex = 0
+    this.currPage = 0
+    this.currPageMuxLocked = false
     this.items = []
   }
 
@@ -53,19 +62,49 @@ export class Client {
 
     this.rationalizeGallery(items)
     this.items = items
+    for (let i = 0; i < precacheRange; i++) {
+      this.ensureAlbumFilled(i)
+      this.cacheGalleryItem(i)
+    }
     this.initialized = true
   }
 
-  // Imgur API for gallery gives incomplete albums - they only have 3 images in them!
-  private async ensureUpcomingAlbumsFilled() {
-    const idx = this.currIndex
-    const item = this.items[this.currIndex]
-
-    if (item.images.length == item.images_count) {
+  private async fetchNextPageIfNeeded() {
+    if (this.currIndex < this.items.length - 2*precacheRange) {
       return
     }
 
-    console.log(`fetching rest of album images for ${item.id}`)
+    if (this.currPageMuxLocked) {
+      return
+    }
+
+    try {
+      this.currPageMuxLocked = true
+      this.currPage++
+      const newItems = await this.fetch<GalleryItem[]>(`gallery/hot/viral/day/${this.currPage}`)
+      if (newItems === null) {
+        console.error("no items in response")
+        return []
+      }
+      for (const item of newItems) {
+        if (this.hasGalleryItem(item.id)) {
+          continue
+        }
+
+        this.items.push(...newItems)
+      }
+    } finally {
+      this.currPageMuxLocked = false
+    }
+  }
+
+  // Imgur API for gallery gives incomplete albums - they only have 3 images in them!
+  private async ensureAlbumFilled(idx: number = this.currIndex) {
+    const item = this.items[idx]
+
+    if (!item.is_album || (item.images.length == item.images_count)) {
+      return
+    }
 
     const album = await this.fetch<AlbumItem>(`album/${item.id}`)
     if (album == null) {
@@ -75,21 +114,44 @@ export class Client {
     this.items[idx].images = album.images
   }
 
+  private async cacheGalleryItem(idx: number = this.currIndex) {
+    for (const image of this.items[idx].images) {
+      const cache = await caches.open(imageCache)
+      cache.add(image.link)
+    }
+  }
+
+  private hasGalleryItem(id: string) {
+    for (const item of this.items) {
+      if (item.id == id) {
+        return true
+      }
+    }
+
+    return false
+  }
+
+  async Gallery() {
+    if (!this.initialized) {
+      await this.initializeGallery()
+    }
+    return this.items
+  }
+
   async GalleryFirst() {
     if (!this.initialized) {
       await this.initializeGallery()
     }
     this.currIndex = 0
-    await this.ensureUpcomingAlbumsFilled()
+    await this.ensureAlbumFilled()
     return this.items[this.currIndex]
   }
 
-  async GalleryNext() {
+  GalleryNext() {
     this.currIndex++
-    console.log(this.items[this.currIndex].images[0].id)
-    await this.ensureUpcomingAlbumsFilled()
-    console.log(`curr index is: ${this.currIndex}`)
-    console.log(this.items[this.currIndex].images[0].id)
+    this.fetchNextPageIfNeeded()
+    this.ensureAlbumFilled(this.currIndex + precacheRange)
+    this.cacheGalleryItem(this.currIndex + precacheRange)
     return this.items[this.currIndex]
   }
 

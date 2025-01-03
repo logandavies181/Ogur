@@ -26,13 +26,12 @@ export function Gallery() {
     setGalleryItem(galleryPage)
   }
 
-  const handleIncr = async () => {
-    const galleryPage = await client.GalleryNext()
+  const handleIncr = () => {
+    const galleryPage = client.GalleryNext()
     setGalleryItem(galleryPage)
   }
 
   const onSwiped = (event: SwipeEvent) => {
-    console.log("swiping")
     switch (event.detail.dir) {
       case "left":
         handleIncr()
@@ -45,7 +44,6 @@ export function Gallery() {
   }
 
   const onKeyDown = (event: KeyDownEvent) => {
-    console.log("key pressed")
     switch (event.code) {
       case KeyDownKeys.right:
         handleIncr()
