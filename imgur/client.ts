@@ -148,6 +148,11 @@ export class Client {
   }
 
   GalleryNext() {
+    if (this.currIndex == this.items.length){
+      console.error("more gallery items haven't been fetched!")
+      return this.items[this.currIndex]
+    }
+
     this.currIndex++
     this.fetchNextPageIfNeeded()
     this.ensureAlbumFilled(this.currIndex + precacheRange)
