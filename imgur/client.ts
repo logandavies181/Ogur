@@ -70,7 +70,7 @@ export class Client {
   }
 
   private async fetchNextPageIfNeeded() {
-    if (this.currIndex < this.items.length - 2*precacheRange) {
+    if (this.currIndex < this.items.length - 2 * precacheRange) {
       return
     }
 
@@ -102,7 +102,7 @@ export class Client {
   private async ensureAlbumFilled(idx: number = this.currIndex) {
     const item = this.items[idx]
 
-    if (!item.is_album || (item.images.length == item.images_count)) {
+    if (!item.is_album || item.images.length == item.images_count) {
       return
     }
 
@@ -148,7 +148,7 @@ export class Client {
   }
 
   GalleryNext() {
-    if (this.currIndex == this.items.length){
+    if (this.currIndex == this.items.length) {
       console.error("more gallery items haven't been fetched!")
       return this.items[this.currIndex]
     }
