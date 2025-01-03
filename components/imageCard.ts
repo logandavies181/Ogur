@@ -25,7 +25,7 @@ export function ImageCard({ input, pageTitle }: ImageCardProps) {
     case ImageTypes.Mp4:
       imageOrVideo = html`
         <video
-          class="w-full ${input.id}"
+          class="w-full"
           autoplay
           muted
           controls
@@ -40,7 +40,7 @@ export function ImageCard({ input, pageTitle }: ImageCardProps) {
   }
 
   return html`
-    <div class="flex flex-col m-1 ${input.id}">
+    <div class="flex flex-col m-1">
       ${input.title && input.title != pageTitle && html`<h3 class="ml-2">${input.title}</h3>`} ${imageOrVideo}
       ${input.description && html`<div class="ml-2">${input.description}</div>`}
     </div>
