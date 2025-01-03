@@ -2,7 +2,7 @@
 //  https://github.com/denoland/deno/issues/15975
 declare const self: ServiceWorkerGlobalScope
 
-const sv = "0.1.0"
+const sv = "0.4.0"
 
 // stored html/js/css
 const webCache = `web-${sv}`

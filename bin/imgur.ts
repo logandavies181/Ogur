@@ -3,6 +3,12 @@ import { Client } from "../imgur/client.ts"
 
 const client = new Client(IMGUR_TOKEN)
 
-const gal = await client.Gallery(2)
+const gal = await client.Gallery()
 
-console.log(gal.length)
+for (const g of gal) {
+  if (g.id != "mLbKsUy") {
+    continue
+  }
+
+  console.log(g)
+}

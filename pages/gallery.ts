@@ -7,53 +7,28 @@ import { GalleryPage } from "../components/galleryPage.ts"
 import { IMGUR_TOKEN } from "../.env.ts"
 import { KeyDownEvent, KeyDownKeys, KeyDownTopic, SwipeEvent } from "../lib/events.ts"
 
-export function Gallery() {
-  const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([])
-  const [showIndex, setShowIndex] = useState(0)
-  const [fetching, setFetching] = useState(false)
-  const [pageNumber, setPageNumber] = useState(0)
+const client = new Client(IMGUR_TOKEN)
 
-  const client = new Client(IMGUR_TOKEN)
+export function Gallery() {
+  const [galleryItem, setGalleryItem] = useState<GalleryItem | null>(null)
+  const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
-    if (showIndex < galleryItems.length * 0.8) {
-      return
-    }
-
     ;(async () => {
-      const page0 = await client.Gallery(0)
-      setGalleryItems(page0)
+      const galleryPage = await client.GalleryFirst()
+      setGalleryItem(galleryPage)
+      setLoaded(true)
     })()
   }, [])
 
   const handleDecr = () => {
-    if (showIndex == 0) {
-      return
-    }
-
-    setShowIndex(showIndex - 1)
+    const galleryPage = client.GalleryPrev()
+    setGalleryItem(galleryPage)
   }
 
   const handleIncr = () => {
-    setShowIndex(showIndex + 1)
-
-    if (showIndex < galleryItems.length * 0.8) {
-      return
-    }
-
-    setPageNumber(pageNumber + 1)
-
-    if (fetching) {
-      return
-    } else {
-      setFetching(true)
-    }
-
-    ;(async () => {
-      const nextPage = await client.Gallery(pageNumber)
-      setGalleryItems(galleryItems.concat(nextPage))
-      setFetching(false)
-    })()
+    const galleryPage = client.GalleryNext()
+    setGalleryItem(galleryPage)
   }
 
   const onSwiped = (event: SwipeEvent) => {
@@ -81,7 +56,7 @@ export function Gallery() {
 
   KeyDownTopic.Subscribe("galleryPage", onKeyDown)
 
-  if (galleryItems.length == 0) {
+  if (!loaded) {
     return html`Loading...`
   }
 
@@ -91,15 +66,9 @@ export function Gallery() {
       onswiped=${onSwiped}
     >
       <div class="min-w-full w-full min-h-full h-full flex flex-row overflow-hidden rounded-lg">
-        ${galleryItems.map((item, index) => {
-          if (index == showIndex) {
-            return html`
-              <div class="min-w-full w-full">
-                <${GalleryPage} galleryItem=${item} />
-              </div>
-            `
-          }
-        })}
+        <div class="min-w-full w-full">
+          <${GalleryPage} galleryItem=${galleryItem} />
+        </div>
       </div>
     </div>
   `

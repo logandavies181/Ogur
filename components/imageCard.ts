@@ -29,11 +29,8 @@ export function ImageCard({ input, pageTitle }: ImageCardProps) {
           autoplay
           muted
           controls
+          src=${input.link}
         >
-          <source
-            src=${input.link}
-            type="video/mp4"
-          />
           Your browser does not support the video tag.
         </video>
       `
