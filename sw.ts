@@ -10,9 +10,9 @@ const webCache = `web-${sv}`
 // TODO: static check here
 const urlsToCache = [
   "index.html",
-  "dist/favicon.svg",
-  "dist/main.js",
-  "dist/output.css",
+  "favicon.svg",
+  "main.js",
+  "output.css",
 ]
 
 self.addEventListener("install", (event) => {

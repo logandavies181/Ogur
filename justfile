@@ -5,12 +5,14 @@ alias c := check
 alias b := build
 @build: check
     bun build main.ts --outdir dist
-    bun build sw.ts --outdir .
+    bun build sw.ts --outdir dist
     deno run -A npm:tailwindcss -o dist/output.css
-    cp public/favicon.svg dist
+    cp public/favicon.svg index.html manifest.json dist
 
 alias s := serve
 @serve: build
+    #!/usr/bin/env bash
+    cd dist
     python3 -m http.server 8080
 
 alias f := fmt
