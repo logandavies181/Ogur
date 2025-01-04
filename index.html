@@ -20,6 +20,22 @@
       body > * {
         flex-shrink: 0;
       }
+      .swipe-left {
+        animation: swipe-left 0.1s;
+      }
+      @keyframes swipe-left {
+        from {
+          transform: translateX(100%);
+        }
+      }
+      .swipe-right {
+        animation: swipe-right 0.1s;
+      }
+      @keyframes swipe-right {
+        from {
+          transform: translateX(-100%);
+        }
+      }
     </style>
   </head>
   <script src="dist/main.js" type="module"></script>

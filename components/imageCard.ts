@@ -25,6 +25,7 @@ export function ImageCard({ input, pageTitle }: ImageCardProps) {
     case ImageTypes.Mp4:
       imageOrVideo = html`
         <video
+          id=${input.id}
           class="w-full"
           autoplay
           muted

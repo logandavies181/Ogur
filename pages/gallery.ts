@@ -12,6 +12,7 @@ const client = new Client(IMGUR_TOKEN)
 export function Gallery() {
   const [galleryItem, setGalleryItem] = useState<GalleryItem | null>(null)
   const [loaded, setLoaded] = useState(false)
+  const [swipeDirection, setSwipeDirection] = useState("")
 
   useEffect(() => {
     ;(async () => {
@@ -23,11 +24,13 @@ export function Gallery() {
 
   const handleDecr = () => {
     const galleryPage = client.GalleryPrev()
+    setSwipeDirection("swipe-right")
     setGalleryItem(galleryPage)
   }
 
   const handleIncr = () => {
     const galleryPage = client.GalleryNext()
+    setSwipeDirection("swipe-left")
     setGalleryItem(galleryPage)
   }
 
@@ -67,7 +70,10 @@ export function Gallery() {
     >
       <div class="min-w-full w-full min-h-full h-full flex flex-row overflow-hidden rounded-lg">
         <div class="min-w-full w-full">
-          <${GalleryPage} galleryItem=${galleryItem} />
+          <${GalleryPage}
+            galleryItem=${galleryItem}
+            swipeDirection=${swipeDirection}
+          />
         </div>
       </div>
     </div>
