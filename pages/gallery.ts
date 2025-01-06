@@ -10,7 +10,7 @@ import { KeyDownEvent, KeyDownKeys, KeyDownTopic, SwipeEvent } from "../lib/even
 const client = new Client(IMGUR_TOKEN)
 
 export function Gallery() {
-  const [galleryItem, setGalleryItem] = useState<GalleryItem | null>(null)
+  const [galleryItem, _setGalleryItem] = useState<GalleryItem | null>(null)
   const [loaded, setLoaded] = useState(false)
   const [swipeDirection, setSwipeDirection] = useState("")
 
@@ -19,8 +19,14 @@ export function Gallery() {
       const galleryPage = await client.GalleryFirst()
       setGalleryItem(galleryPage)
       setLoaded(true)
+      history.replaceState("", "", `gallery/${galleryItem?.id}`)
     })()
   }, [])
+
+  const setGalleryItem = (gi: GalleryItem) => {
+    _setGalleryItem(gi)
+    history.replaceState("", "", `${gi.id}`)
+  }
 
   const handleDecr = () => {
     const galleryPage = client.GalleryPrev()
